@@ -12,6 +12,7 @@ namespace KzA.DNS.ResourceRecord
         public string? ZoneName { get; set; }
         public int TTL { get; set; }
         public RRType Type { get; }
+        public object Data { get; }
         public string ToZoneFile(bool OmitName = false);
     }
 }

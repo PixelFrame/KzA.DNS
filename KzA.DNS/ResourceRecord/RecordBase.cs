@@ -14,6 +14,7 @@ namespace KzA.DNS.ResourceRecord
         public int TTL { get; set; } = -1;
         public abstract RRType Type { get; }
         public abstract T Data { get; set; }
+        object IRecord.Data { get => Data!; }
         public override abstract string ToString();
         public virtual string ToZoneFile(bool OmitName = false) =>
             $"{(OmitName ? "" : Name),-15} {(TTL > -1 ? $"{TTL}" : ""),-10} IN    {Type,-7} {((Data is IRecordData RData) ? RData.ToZoneFile() : Data!.ToString())}";
