@@ -14,18 +14,33 @@ namespace KzA.DNS.Zone
         public readonly List<IRecord> Records = [];
         public uint DefaultTTL { get; set; } = 3600;
 
-        public string ToZoneFile()
+        public string ToZoneFile(bool SortRecords = false)
         {
             var sb = new StringBuilder();
             sb.AppendLine($";Zone file of primary zone: {Name}");
             sb.AppendLine();
             sb.AppendLine($"$TTL {DefaultTTL}");
             sb.AppendLine();
-            sb.AppendLine(";NAME           TTL        CLASS TYPE RDATA");
+            sb.AppendLine(";NAME           TTL        CLASS TYPE    RDATA");
             sb.AppendLine(SOA.ToZoneFile());
-            foreach (var record in Records)
+
+            var lastName = string.Empty;
+            if (SortRecords)
             {
-                sb.AppendLine(record.ToZoneFile());
+                var ordered = Records.OrderBy(r => r.Type);
+                foreach (var record in ordered)
+                {
+                    sb.AppendLine(record.ToZoneFile(record.Name == lastName));
+                    lastName = record.Name;
+                }
+            }
+            else
+            {
+                foreach (var record in Records)
+                {
+                    sb.AppendLine(record.ToZoneFile(record.Name == lastName));
+                    lastName = record.Name;
+                }
             }
             return sb.ToString();
         }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace KzA.DNS.DataModel
 {
-    public class TxtData
+    public class TxtData : IRecordData
     {
         public string Txt = string.Empty;
 
-        public override string ToString()
+        public string ToZoneFile()
         {
             return $"\"{Txt}\"";
         }

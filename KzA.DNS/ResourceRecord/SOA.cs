@@ -15,8 +15,8 @@ namespace KzA.DNS.ResourceRecord
         public override RRType Type { get; } = RRType.SOA;
         public override SoaData Data { get => data; set => data = value; }
 
-        public string MNAME { get => data.MNAME; set => data.MNAME = value; }
-        public string RNAME { get => data.RNAME; set => data.RNAME = value; }
+        public string MNAME { get => data.MNAME.HostName; set => data.MNAME.HostName = value; }
+        public string RNAME { get => data.RNAME.HostName; set => data.RNAME.HostName = value; }
         public uint SERIAL { get => data.SERIAL; set => data.SERIAL = value; }
         public uint REFRESH { get => data.REFRESH; set => data.REFRESH = value; }
         public uint RETRY { get => data.RETRY; set => data.RETRY = value; }

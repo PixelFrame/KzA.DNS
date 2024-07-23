@@ -16,7 +16,7 @@ namespace KzA.DNS.ResourceRecord
         public override MxData Data { get => data; set => data = value; }
 
         public ushort Preference { get => data.Preference; set => data.Preference = value; }
-        public string Host { get => data.Host; set => data.Host = value; }
+        public string Host { get => data.Host.HostName; set => data.Host.HostName = value; }
 
         public override string ToString()
         {

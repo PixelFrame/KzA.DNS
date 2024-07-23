@@ -19,7 +19,7 @@ namespace KzA.DNS.ResourceRecord
         public ushort Priority { get => data.Priority; set => data.Priority = value; }
         public ushort Weight { get => data.Weight; set => data.Weight = value; }
         public ushort Port { get => data.Port; set => data.Port = value; }
-        public string Target { get => data.Target; set => data.Target = value; }
+        public string Target { get => data.Target.HostName; set => data.Target.HostName = value; }
 
         public override string ToString()
         {

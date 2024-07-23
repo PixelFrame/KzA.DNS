@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace KzA.DNS.DataModel
 {
-    public class SoaData
+    public class SoaData : IRecordData
     {
-        public string MNAME { get; set; } = string.Empty;
-        public string RNAME { get; set; } = string.Empty;
+        public HostData MNAME { get; set; } = new();
+        public HostData RNAME { get; set; } = new();
         public uint SERIAL { get; set; }
         public uint REFRESH { get; set; }
         public uint RETRY { get; set; }
         public uint EXPIRE { get; set; }
         public uint MINIMUM {  get; set; }
 
-        public override string ToString()
+        public string ToZoneFile()
         {
             var sb = new StringBuilder();
             sb.AppendLine($"{MNAME} {RNAME}(")
@@ -25,7 +25,7 @@ namespace KzA.DNS.DataModel
               .AppendLine($"                                         {RETRY, -10};Retry")
               .AppendLine($"                                         {EXPIRE, -10};Expire")
               .AppendLine($"                                         {MINIMUM, -10};Minimum")
-              .AppendLine(")");
+              .AppendLine( "                                         )");
             return sb.ToString();
         }
     }

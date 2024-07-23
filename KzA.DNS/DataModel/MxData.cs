@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace KzA.DNS.DataModel
 {
-    public class MxData
+    public class MxData : IRecordData
     {
         public ushort Preference { get; set; }
-        public string Host { get; set; } = "mx.";
+        public HostData Host { get; set; } = new("mx.");
 
-        public override string ToString()
+        public string ToZoneFile()
         {
             return $"{Preference} {Host}";
         }

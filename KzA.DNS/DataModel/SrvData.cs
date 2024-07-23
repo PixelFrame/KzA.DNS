@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace KzA.DNS.DataModel
 {
-    public class SrvData
+    public class SrvData : IRecordData
     {
         public ushort Priority { get; set; }
         public ushort Weight { get; set; }
         public ushort Port { get; set; }
-        public string Target { get; set; } = ".";
+        public HostData Target { get; set; } = new("srv");
 
-        public override string ToString()
+        public string ToZoneFile()
         {
             return $"{Priority} {Weight} {Port} {Target}";
         }

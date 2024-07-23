@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KzA.DNS.DataModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace KzA.DNS.ResourceRecord
         public abstract RRType Type { get; }
         public abstract T Data { get; set; }
         public override abstract string ToString();
-        public virtual string ToZoneFile() => $"{Name, -15} {(TTL > -1 ? $"{TTL}" : ""), -10} IN    {Type, -7} {Data}";
+        public virtual string ToZoneFile(bool OmitName = false) =>
+            $"{(OmitName ? "" : Name),-15} {(TTL > -1 ? $"{TTL}" : ""),-10} IN    {Type,-7} {((Data is IRecordData RData) ? RData.ToZoneFile() : Data!.ToString())}";
     }
 }

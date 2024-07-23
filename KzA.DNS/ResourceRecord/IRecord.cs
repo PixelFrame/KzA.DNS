@@ -8,6 +8,10 @@ namespace KzA.DNS.ResourceRecord
 {
     public interface IRecord
     {
-        public string ToZoneFile();
+        public string Name { get; set; }
+        public string? ZoneName { get; set; }
+        public int TTL { get; set; }
+        public RRType Type { get; }
+        public string ToZoneFile(bool OmitName = false);
     }
 }
