@@ -19,6 +19,11 @@ namespace KzA.DNS.DataModel
                     hostname = value;
                     if (!hostname.EndsWith('.')) hostname += '.';
                 }
+                else if(Uri.CheckHostName(value.Replace('_', 'a')) == UriHostNameType.Dns)  // Uri.CheckHostName does not recognize DNS labels beginning with _, which is weird...
+                {
+                    hostname = value;
+                    if (!hostname.EndsWith('.')) hostname += '.';
+                }
                 else
                 {
                     throw new ArgumentException("Not valid DNS hostname");

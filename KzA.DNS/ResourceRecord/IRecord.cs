@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KzA.DNS.ResourceRecord
 {
-    public interface IRecord
+    public interface IRecord : ICloneable
     {
         public string Name { get; set; }
         public string? ZoneName { get; set; }
