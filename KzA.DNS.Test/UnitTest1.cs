@@ -113,6 +113,20 @@ public class UnitTest1(ITestOutputHelper output)
                     {"ipv4hint", "10.10.10.10,10.20.10.10" },
                 }
         });
+        var wks = new ArbitraryRecord()
+        {
+            Name = "host",
+            Data = "1.2.3.1 TCP (smtp netstat http https)"
+        };
+        wks.ModifyType(RRType.WKS);
+        zone.Records.Add(wks);
+        var hi = new ArbitraryRecord()
+        {
+            Name = "host",
+            Data = "\"Intel Xeon Platium 8272CL\" \"Windows Server 2025 Datacenter\""
+        };
+        hi.ModifyType(RRType.HINFO);
+        zone.Records.Add(hi);
 
         var zonefile = zone.ToZoneFile(true);
         var outfile = Path.GetFullPath("../../zonefile.dns");  // KzA.DNS.Test/bin/zonefile.dns
