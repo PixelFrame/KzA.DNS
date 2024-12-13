@@ -52,7 +52,7 @@ namespace KzA.DNS
         BADTRUNC = 22,
         BADCOOKIE = 23,
     }
-    
+
     public enum RRType : ushort
     {
         Reserved0 = 0,
@@ -139,6 +139,7 @@ namespace KzA.DNS
         MAILB = 253,
         MAILA = 254,
         Wildcard = 255,
+        Any = 255,
         URI = 256,
         CAA = 257,
         AVC = 258,
@@ -151,7 +152,7 @@ namespace KzA.DNS
         Reserved = 65535
     }
 
-    public enum Class
+    public enum Class : ushort
     {
         Reserved = 0,
         IN = 1,
@@ -162,5 +163,16 @@ namespace KzA.DNS
         HS = 4,
         NONE = 254,
         ANY = 255,
+    }
+
+    public enum SvcbParamKeys : ushort
+    {
+        mandatory = 0,
+        alph = 1,
+        no_default_alpn = 2,
+        port = 3,
+        ipv4hint = 4,
+        ech = 5,
+        ipv6hint = 6,
     }
 }

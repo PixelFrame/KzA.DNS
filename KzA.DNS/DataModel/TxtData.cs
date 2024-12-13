@@ -1,4 +1,6 @@
+using KzA.DNS.Packet;
 using System;
+using System.Buffers.Binary;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +15,13 @@ namespace KzA.DNS.DataModel
         public string ToZoneFile()
         {
             return $"\"{Txt}\"";
+        }
+        public static TxtData Parse(ReadOnlySpan<byte> data, int offset, ushort length)
+        {
+            return new()
+            {
+                Txt = Encoding.UTF8.GetString(data.Slice(offset, length)),
+            };
         }
     }
 }

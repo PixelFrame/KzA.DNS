@@ -1,4 +1,6 @@
-﻿using System;
+﻿using KzA.DNS.Packet;
+using System;
+using System.Buffers.Binary;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +28,25 @@ namespace KzA.DNS.DataModel
             sb.Append("                                         )");
 
             return sb.ToString();
+        }
+
+        public static SvcbData Parse(ReadOnlySpan<byte> data, int offset, ushort length)
+        {
+            var end = offset + length;
+            SvcbData svcb = new()
+            {
+                Priority = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2)),
+            };
+            offset += 2;
+            svcb.Target.HostNameRaw = DomainName.Parse(data, ref offset);
+            while (offset < end)
+            {
+                var valueLen = BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset + 2, 2));
+                var value = Encoding.UTF8.GetString(data.Slice(offset + 4, valueLen));
+                svcb.Params.Add(((SvcbParamKeys)BinaryPrimitives.ReadUInt16BigEndian(data.Slice(offset, 2))).ToString(), value);
+                offset += 4 + valueLen;
+            }
+            return svcb;
         }
     }
 }
