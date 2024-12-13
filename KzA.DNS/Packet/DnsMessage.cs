@@ -35,21 +35,32 @@ namespace KzA.DNS.Packet
                 TcpMsgLen = isTCP ? BinaryPrimitives.ReadUInt16BigEndian(data[..2]) : (ushort)0,
                 Header = Header.Parse(data, ref offset)
             };
-            while (qcnt++ < message.Header.QuestionCount)
+            try
             {
-                message.questions.Add(Question.Parse(data, ref offset));
+                while (qcnt++ < message.Header.QuestionCount)
+                {
+                    message.questions.Add(Question.Parse(data, ref offset));
+                }
+                while (acnt++ < message.Header.AnswerCount)
+                {
+                    message.answers.Add(Answer.Parse(data, ref offset));
+                }
+                while (aucnt++ < message.Header.AuthorityCount)
+                {
+                    message.authorities.Add(Answer.Parse(data, ref offset));
+                }
+                while (adcnt++ < message.Header.AdditionalCount)
+                {
+                    message.additionals.Add(Answer.Parse(data, ref offset));
+                }
             }
-            while (acnt++ < message.Header.AnswerCount)
+            catch (ArgumentOutOfRangeException)
             {
-                message.answers.Add(Answer.Parse(data, ref offset));
+                // Possibel incomplete DNS message, can still move on with partial result
             }
-            while (aucnt++ < message.Header.AuthorityCount)
+            catch (Exception e)
             {
-                message.authorities.Add(Answer.Parse(data, ref offset));
-            }
-            while (adcnt++ < message.Header.AdditionalCount)
-            {
-                message.additionals.Add(Answer.Parse(data, ref offset));
+                throw new DnsParseException($"Failed to parse DNS packet at {offset}", offset, data.ToArray(), e);
             }
             return message;
         }

@@ -32,5 +32,9 @@ namespace KzA.DNS.DataModel
             srv.Target.HostNameRaw = DomainName.Parse(data, ref offset);
             return srv;
         }
+        public override string ToString()
+        {
+            return $"{Target} Priority {Priority} Weight {Weight} Port {Port}";
+        }
     }
 }

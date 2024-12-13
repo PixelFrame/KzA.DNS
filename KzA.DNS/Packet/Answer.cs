@@ -19,7 +19,7 @@ namespace KzA.DNS.Packet
         public byte EDNS_Version => (byte)(TTL & 0x00FF0000 >> 16);
         public bool EDNS_DO => (TTL & 0x00008000) != 0;
         public ushort RDLength;
-        public IRecordData RData = new UnknownData();
+        public IRecordData RData = new NoData();
 
         public static Answer Parse(ReadOnlySpan<byte> data, ref int offset)
         {
@@ -33,19 +33,22 @@ namespace KzA.DNS.Packet
             };
             offset += 10;
 
-            a.RData = a.Type switch
+            if (a.RDLength > 0)
             {
-                RRType.A or
-                RRType.AAAA => AddressData.Parse(data, offset, a.RDLength),
-                RRType.CNAME or
-                RRType.PTR => HostData.Parse(data, offset, a.RDLength),
-                RRType.MX => MxData.Parse(data, offset, a.RDLength),
-                RRType.SOA => SoaData.Parse(data, offset, a.RDLength),
-                RRType.SRV => SrvData.Parse(data, offset, a.RDLength),
-                RRType.TXT => TxtData.Parse(data, offset, a.RDLength),
-                RRType.SVCB => SvcbData.Parse(data, offset, a.RDLength),
-                _ => UnknownData.Parse(data, offset, a.RDLength),
-            };
+                a.RData = a.Type switch
+                {
+                    RRType.A or
+                    RRType.AAAA => AddressData.Parse(data, offset, a.RDLength),
+                    RRType.CNAME or
+                    RRType.PTR => HostData.Parse(data, offset, a.RDLength),
+                    RRType.MX => MxData.Parse(data, offset, a.RDLength),
+                    RRType.SOA => SoaData.Parse(data, offset, a.RDLength),
+                    RRType.SRV => SrvData.Parse(data, offset, a.RDLength),
+                    RRType.TXT => TxtData.Parse(data, offset, a.RDLength),
+                    RRType.SVCB => SvcbData.Parse(data, offset, a.RDLength),
+                    _ => UnknownData.Parse(data, offset, a.RDLength),
+                };
+            }
             offset += a.RDLength;
             return a;
         }

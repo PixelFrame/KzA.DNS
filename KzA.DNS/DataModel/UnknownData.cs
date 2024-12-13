@@ -28,5 +28,10 @@ namespace KzA.DNS.DataModel
                 Data = data.Slice(offset, length).ToArray(),
             };
         }
+
+        public override string ToString()
+        {
+            return string.Join(' ', _data.Select(b => b.ToString("X2")));
+        }
     }
 }

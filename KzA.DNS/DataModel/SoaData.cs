@@ -44,5 +44,18 @@ namespace KzA.DNS.DataModel
 
             return soa;
         }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"Master      {MNAME}")
+              .AppendLine($"Responsible {RNAME}")
+              .AppendLine($"Serial      {SERIAL}")
+              .AppendLine($"Refresh     {REFRESH}")
+              .AppendLine($"Retry       {RETRY}")
+              .AppendLine($"Expire      {EXPIRE}")
+              .AppendLine($"Minimum     {MINIMUM}");
+            return sb.ToString();
+        }
     }
 }

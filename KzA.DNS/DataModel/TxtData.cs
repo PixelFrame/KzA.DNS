@@ -23,5 +23,10 @@ namespace KzA.DNS.DataModel
                 Txt = Encoding.UTF8.GetString(data.Slice(offset, length)),
             };
         }
+
+        public override string ToString()
+        {
+            return Txt;
+        }
     }
 }

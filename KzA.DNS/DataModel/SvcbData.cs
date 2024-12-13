@@ -48,5 +48,17 @@ namespace KzA.DNS.DataModel
             }
             return svcb;
         }
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"Target  \t{Target}")
+              .AppendLine($"Priority\t{Priority}")
+              .AppendLine($"Params");
+            foreach (var param in Params)
+            {
+                sb.AppendLine($"    {param.Key}:\t{param.Value}");
+            }
+            return sb.ToString();
+        }
     }
 }
