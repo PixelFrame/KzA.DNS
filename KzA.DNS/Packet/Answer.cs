@@ -45,6 +45,7 @@ namespace KzA.DNS.Packet
                     RRType.SOA => SoaData.Parse(data, offset, a.RDLength),
                     RRType.SRV => SrvData.Parse(data, offset, a.RDLength),
                     RRType.TXT => TxtData.Parse(data, offset, a.RDLength),
+                    RRType.HTTPS or
                     RRType.SVCB => SvcbData.Parse(data, offset, a.RDLength),
                     _ => UnknownData.Parse(data, offset, a.RDLength),
                 };
