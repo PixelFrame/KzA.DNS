@@ -40,6 +40,7 @@ namespace KzA.DNS.Packet
                     RRType.A or
                     RRType.AAAA => AddressData.Parse(data, offset, a.RDLength),
                     RRType.CNAME or
+                    RRType.NS or
                     RRType.PTR => HostData.Parse(data, offset, a.RDLength),
                     RRType.MX => MxData.Parse(data, offset, a.RDLength),
                     RRType.SOA => SoaData.Parse(data, offset, a.RDLength),
@@ -47,6 +48,14 @@ namespace KzA.DNS.Packet
                     RRType.TXT => TxtData.Parse(data, offset, a.RDLength),
                     RRType.HTTPS or
                     RRType.SVCB => SvcbData.Parse(data, offset, a.RDLength),
+                    RRType.RRSIG => RRSigData.Parse(data, offset, a.RDLength),
+                    RRType.NSEC => NSecData.Parse(data, offset, a.RDLength),
+                    RRType.NSEC3 => NSec3Data.Parse(data, offset, a.RDLength),
+                    RRType.NSEC3PARAM => NSec3ParamData.Parse(data, offset, a.RDLength),
+                    RRType.DS => DsData.Parse(data, offset, a.RDLength),
+                    RRType.DNSKEY => DnsKeyData.Parse(data, offset, a.RDLength),
+                    RRType.TSIG => TSigData.Parse(data, offset, a.RDLength),
+                    RRType.TKEY => TKeyData.Parse(data, offset, a.RDLength),
                     _ => UnknownData.Parse(data, offset, a.RDLength),
                 };
             }

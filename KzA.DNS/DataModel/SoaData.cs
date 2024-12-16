@@ -48,13 +48,13 @@ namespace KzA.DNS.DataModel
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.AppendLine($"Master      {MNAME}")
-              .AppendLine($"Responsible {RNAME}")
-              .AppendLine($"Serial      {SERIAL}")
-              .AppendLine($"Refresh     {REFRESH}")
-              .AppendLine($"Retry       {RETRY}")
-              .AppendLine($"Expire      {EXPIRE}")
-              .AppendLine($"Minimum     {MINIMUM}");
+            sb.AppendLine($"Master: {MNAME}")
+              .AppendLine($"Responsible: {RNAME}")
+              .AppendLine($"Serial: {SERIAL}")
+              .AppendLine($"Refresh: {REFRESH}")
+              .AppendLine($"Retry: {RETRY}")
+              .AppendLine($"Expire: {EXPIRE}")
+              .Append($"Minimum: {MINIMUM}");
             return sb.ToString();
         }
     }

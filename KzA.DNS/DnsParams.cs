@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace KzA.DNS
 {
+    #region Common Params
+    //https://www.iana.org/assignments/dns-parameters/dns-parameters.xhtml
+
     [Flags]
     public enum HeaderFlags
     {
@@ -165,6 +168,23 @@ namespace KzA.DNS
         ANY = 255,
     }
 
+    //https://datatracker.ietf.org/doc/html/rfc2930#section-2.5
+
+    public enum TKeyMode : ushort
+    {
+        Reserved = 0,
+        ServerAssignment = 1,
+        DH = 2,
+        GSSAPI = 3,
+        ResolverAssignment = 4,
+        KeyDeletion = 5,
+    }
+
+    #endregion
+
+    #region SVCB
+    //https://www.iana.org/assignments/dns-svcb/dns-svcb.xhtml
+
     public enum SvcbParamKeys : ushort
     {
         mandatory = 0,
@@ -174,5 +194,85 @@ namespace KzA.DNS
         ipv4hint = 4,
         ech = 5,
         ipv6hint = 6,
+        dohpath = 7,
+        ohttp = 8,
+        tls_supported_groups = 9,
     }
+
+    #endregion
+
+    #region DNSSEC
+    //https://www.iana.org/assignments/dnskey-flags/dnskey-flags.xhtml
+
+    [Flags]
+    public enum DnsSecDnsKeyFlags : ushort
+    {
+        ZONE = 0x0100,
+        REVOKE = 0x0080,
+        SEP = 0x0001,
+    }
+
+    //https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xhtml
+
+    public enum DnsSecAlgorithm : byte
+    {
+        DELETE = 0,
+        RSAMD5 = 1,
+        DH = 2,
+        DSA = 3,
+        Reserved4 = 4,
+        RSASHA1 = 5,
+        DSA_NSEC3_SHA1 = 6,
+        RSASHA1_NSEC3_SHA1 = 7,
+        RASSHA256 = 8,
+        Reserved9 = 9,
+        RASSHA512 = 10,
+        Reserved11 = 11,
+        ECC_GOST = 12,
+        ECDSAP256SHA256 = 13,
+        ECDSAP384SHA384 = 14,
+        ED25519 = 15,
+        ED448 = 16,
+        SM2SM3 = 17,
+        ECC_GOST12 = 23,
+        INDIRECT = 252,
+        PRIVATEDNS = 253,
+        PRIVATEOID = 254,
+        Reserved255 = 255,
+    }
+
+    //https://www.iana.org/assignments/ds-rr-types/ds-rr-types.xhtml
+
+    public enum DnsSecDsDigestAlgorithm : byte
+    {
+        Reserved = 0,
+        SHA1 = 1,
+        SHA256 = 2,
+        GOST_R_3411_94 = 3,
+        SHA384 = 4,
+        GPST_R_3411_2012 = 5,
+        SM3 = 6,
+    }
+
+    //https://www.iana.org/assignments/dnssec-nsec3-parameters/dnssec-nsec3-parameters.xhtml
+
+    [Flags]
+    public enum DnsSecNSec3Flags : byte
+    {
+        Opt_Out = 0x1,
+    }
+
+    [Flags]
+    public enum DnsSecNSec3ParamFlags : byte
+    {
+        Reserved = 0x1,
+    }
+
+    public enum DnsSecNSec3HashAlgorithm : byte
+    {
+        Reserved = 0,
+        SHA1 = 1,
+    }
+
+    #endregion
 }

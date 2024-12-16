@@ -21,7 +21,7 @@ namespace KzA.DNS.Packet
         public readonly ushort UpdateCount => AuthorityCount;
 
         public readonly HeaderFlags HeaderFlags => (HeaderFlags)(Flags & 0x87F0);
-        public readonly OpCode OpCode => (OpCode)(Flags & 0x7800 >> 11);
+        public readonly OpCode OpCode => (OpCode)((Flags & 0x7800) >> 11);
         public readonly RCODE RCODE => (RCODE)(Flags & 0x000F);
 
         public static Header Parse(ReadOnlySpan<byte> data, ref int offset)
